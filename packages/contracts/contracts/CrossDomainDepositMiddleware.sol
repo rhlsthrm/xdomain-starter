@@ -46,6 +46,7 @@ contract CrossDomainDepositMiddleware {
         uint256 amount = token.balanceOf(msg.sender);
         token.transferFrom(msg.sender, address(this), amount);
 
+        token.approve(pool, amount);
         ILendingPool(pool).deposit(asset, amount, onBehalfOf, 0);
 
         emit DepositComplete(asset, pool, onBehalfOf);
